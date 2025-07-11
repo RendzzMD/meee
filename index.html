@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendzz Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --card-color: #1a1a1a;
+            --accent-color: #00f2ff;
+            --accent-secondary: #ff00f2;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-radius: 18px;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            --pulse-color: rgba(0, 242, 255, 0.4);
+            --social-color: #25f4ee;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 75% 30%, #1e1e2e 0%, transparent 50%),
+                radial-gradient(circle at 25% 70%, #2e1e2e 0%, transparent 50%),
+                linear-gradient(to bottom, #0f0f0f, #1a1a1a);
+            overflow-x: hidden;
+        }
+        
+        .profile-card {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            z-index: 1;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            z-index: -1;
+            border-radius: var(--border-radius);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        
+        .profile-card:hover::before {
+            opacity: 0.6;
+        }
+        
+        .profile-header {
+            position: relative;
+            text-align: center;
+            padding: 35px 25px 20px;
+        }
+        
+        .profile-image-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0, 242, 255, 0.3));
+        }
+        
+        .profile-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--accent-secondary);
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0 5px;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .profile-status {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(0, 242, 255, 0.1), rgba(255, 0, 242, 0.1));
+            color: var(--accent-color);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-status:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, rgba(0, 242, 255, 0.2), rgba(255, 0, 242, 0.2));
+        }
+        
+        .profile-details {
+            padding: 0 25px 20px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        
+        .detail-item:hover {
+            transform: translateX(8px);
+            border-bottom-color: rgba(0, 242, 255, 0.1);
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(255, 0, 242, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        
+        .detail-item:hover .detail-icon {
+            transform: rotate(10deg) scale(1.1);
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.2), rgba(255, 0, 242, 0.2));
+            color: var(--accent-secondary);
+        }
+        
+        .detail-content {
+            flex: 1;
+        }
+        
+        .detail-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .tiktok-value {
+            color: var(--social-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tiktok-value i {
+            font-size: 18px;
+        }
+        
+        .nodejs-icon {
+            color: #68a063;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0 20px;
+            gap: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .social-link {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .social-link:hover::before {
+            left: 100%;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        .social-link.tiktok:hover {
+            background: linear-gradient(45deg, #25f4ee, #000000, #fe2c55);
+            color: white;
+        }
+        
+        .social-link.github:hover {
+            background: #333;
+            color: white;
+        }
+        
+        .social-link.instagram:hover {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            color: white;
+        }
+        
+        .social-link.discord:hover {
+            background: #5865f2;
+            color: white;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #ff4d4d, #f9cb28);
+            color: black;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .floating-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(0, 242, 255, 0.4);
+            border-radius: 50%;
+            animation: float-dots 15s infinite linear;
+        }
+        
+        @keyframes float-dots {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-dots">
+        <div class="dot" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="dot" style="top: 70%; left: 80%; animation-delay: 2s;"></div>
+        <div class="dot" style="top: 40%; left: 50%; animation-delay: 4s;"></div>
+        <div class="dot" style="top: 80%; left: 20%; animation-delay: 6s;"></div>
+    </div>
+    
+    <div class="profile-card">
+        <div class="badge">VIP USERS</div>
+        
+        <div class="profile-header">
+            <div class="profile-image-container">
+                <img src="https://files.catbox.moe/pdy0o8.jpg" alt="Profile Photo" class="profile-image">
+            </div>
+            <h1 class="profile-name">Rendzz OFFICIAL</h1>
+            <span class="profile-status">Single</span>
+        </div>
+        
+        <div class="profile-details">
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fab fa-node-js nodejs-icon"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-title">DEVELOPER</div>
+                    <div class="detail-value">Node.js Expert</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fas fa-birthday-cake"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-title">AGE</div>
+                    <div class="detail-value">16 years</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fas fa-flag"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-title">COUNTRY</div>
+                    <div class="detail-value">Indonesia</div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fab fa-tiktok"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-title">TIKTOK FOLLOWERS</div>
+                    <div class="detail-value tiktok-value">
+                        <i class="fab fa-tiktok"></i> 3K+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-title">SKILLS</div>
+                    <div class="detail-value">JavaScript, HTML, CSS, Node.js</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="#" class="social-link tiktok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-link github"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link discord"><i class="fab fa-discord"></i></a>
+        </div>
+    </div>
+</body>
+</html>
